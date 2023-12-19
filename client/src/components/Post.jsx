@@ -37,6 +37,9 @@ const Post = ({ post , reloadState}) => {
 const {currentUser} = useSelector((state)=> state.user)
   const liked = post?.likes?.some((like)=>like.userId === currentUser?._id)
   const handleLike = async () => {
+    if(!currentUser){
+      alert('Plase login first')
+    }
     try {
       const response = await fetch(`/api/posts/like/${post._id}`, {
         method: "POST",
@@ -46,7 +49,7 @@ const {currentUser} = useSelector((state)=> state.user)
       });
       if (response.ok) {
         const result = await response.json();
-         reloadState("reload")
+         reloadState()
         console.log("Liked posted successfully!");
       } else {
         console.error("Failed to post Likes");
@@ -58,7 +61,7 @@ const {currentUser} = useSelector((state)=> state.user)
   const handleOpenOptions =()=>{
   }
   return (
-    <div className="card mb-3">
+    <div className="card mb-3 border">
       <img
         className="card-img-top"
         src={post?.picturePath}

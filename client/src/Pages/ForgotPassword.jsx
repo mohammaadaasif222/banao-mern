@@ -40,7 +40,7 @@ export default function ForgotPassword() {
       >
         <input
           type="email"
-          placeholder="Enter Your Email"
+          placeholder="Enter your email"
           className="border p-3 rounded"
           id="email"
           onChange={handleChange}

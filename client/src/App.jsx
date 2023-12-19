@@ -1,31 +1,37 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Header from "./components/Header";
-import CreatePost from "./Pages/CreatePost";
-import SignUp from "./Pages/SignUp";
-import SignIn from "./Pages/SignIn";
-import Home from "./Pages/Home";
-import Post from "./Pages/Post";
-import PrivateRoute from "./components/PrivateRoute"
-import ForgotPassword from "./Pages/ForgotPassword";
-import ResetPassword from "./Pages/ResetPassword";
+
+const LazyHeader = lazy(() => import("./components/Header"));
+const LazyCreatePost = lazy(() => import("./Pages/CreatePost"));
+const LazySignUp = lazy(() => import("./Pages/SignUp"));
+const LazySignIn = lazy(() => import("./Pages/SignIn"));
+const LazyHome = lazy(() => import("./Pages/Home"));
+const LazyPost = lazy(() => import("./Pages/Post"));
+const LazyPrivateRoute = lazy(() => import("./components/PrivateRoute"));
+const LazyForgotPassword = lazy(() => import("./Pages/ForgotPassword"));
+const LazyResetPassword = lazy(() => import("./Pages/ResetPassword"));
+const LazyProfile = lazy(() => import("./Pages/Profile"));
+import Loader from './components/Loader'
+
+
 export default function App() {
   return (
     <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/sign-up" element={<SignUp />} />
-        <Route path='/post/:postId' element={<Post />} />
-        <Route path='/forgot' element={<ForgotPassword />} />
-        <Route path='/reset-password/:token' element={<ResetPassword />} />
-          
-        <Route element={<PrivateRoute />}>
-          {/* <Route path="/profile" element={<Profile />} /> */}
-          <Route path="/create-post" element={<CreatePost />} />
-        </Route>
-      </Routes>
+      <Suspense fallback={<Loader />}>
+        <LazyHeader />
+        <Routes>
+          <Route path="/" element={<LazyHome />} />
+          <Route path="/sign-in" element={<LazySignIn />} />
+          <Route path="/sign-up" element={<LazySignUp />} />
+          <Route path='/post/:postId' element={<LazyPost />} />
+          <Route path='/forgot' element={<LazyForgotPassword />} />
+          <Route path='/reset-password/:token' element={<LazyResetPassword />} />
+          <Route element={<LazyPrivateRoute />}>
+            <Route path="/profile" element={<LazyProfile />} />
+            <Route path="/create-post" element={<LazyCreatePost />} />
+          </Route>
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }

@@ -9,6 +9,7 @@ export default function SignUp() {
   });
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   
   const handleChange = (e) => {
@@ -45,6 +46,9 @@ export default function SignUp() {
     }
   };
 
+  const handleCheckboxChange = (e) => {
+    setShowPassword(e.target.checked);
+  };
   return (
     <div className="container p-3">
     <h1 className="text-3xl text-center font-semibold my-7">Sign Up</h1>
@@ -70,6 +74,17 @@ export default function SignUp() {
         id="password"
         onChange={handleChange}
       />
+        <div className="form-check form-switch d-flex gap-3 align-items-center pb-3">
+          <input
+            className="form-check-input"
+            type="checkbox"
+            id="flexSwitchCheckDefault"
+            onChange={handleCheckboxChange}
+          />
+          <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
+            Show password
+          </label>
+        </div>
       <button
         disabled={loading}
         className="btn btn-primary btn-lg rounded"

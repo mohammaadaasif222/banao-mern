@@ -43,7 +43,7 @@ export default function ResetPassword() {
       >
         <input
           type="password"
-          placeholder="Enter Your Email"
+          placeholder="Enter new password"
           className="border p-3 rounded"
           id="newPassword"
           onChange={handleChange}
